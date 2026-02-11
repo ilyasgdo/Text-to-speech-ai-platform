@@ -14,7 +14,19 @@ from qwen_tts import Qwen3TTSModel
 
 # Configuration Ollama
 OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODELS = ["qwen3:0.6b", "llama3.2", "qwen2.5", "mistral", "gemma2", "phi3"]
+# Updated with user's available models
+OLLAMA_MODELS = [
+    "qwen2.5-coder:3b",
+    "qwen3:1.7b", 
+    "qwen2.5-coder:7b",
+    "granite-embedding:278m",
+    "nomic-embed-text:latest",
+    "qwen2.5-coder:1.5b",
+    "granite-embedding:latest",
+    "fluffy/l3-8b-stheno-v3.2:latest",
+    "deepscaler:latest",
+    "qwen2.5-coder:0.5b"
+]
 
 # ============================================================
 # Configuration
@@ -43,11 +55,12 @@ def get_device_info():
     mps_available = torch.backends.mps.is_available()
     cuda_available = torch.cuda.is_available()
     
-    devices = ["CPU (Stable)"]
-    if mps_available:
-        devices.append("GPU Apple Silicon (MPS)")
+    devices = []
     if cuda_available:
         devices.append("GPU NVIDIA (CUDA)")
+    if mps_available:
+        devices.append("GPU Apple Silicon (MPS)")
+    devices.append("CPU (Stable)")
     
     return devices
 
@@ -62,7 +75,7 @@ def load_model(model_name: str, device_choice: str):
         dtype = torch.float32  # float32 plus stable sur MPS
     elif "CUDA" in device_choice:
         device = "cuda"
-        dtype = torch.float16
+        dtype = torch.float16 # float16 pour CUDA (plus rapide, moins de VRAM)
     else:
         device = "cpu"
         dtype = torch.float32
