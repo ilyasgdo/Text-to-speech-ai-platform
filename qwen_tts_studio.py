@@ -16,16 +16,10 @@ from qwen_tts import Qwen3TTSModel
 OLLAMA_URL = "http://localhost:11434/api/generate"
 # Updated with user's available models
 OLLAMA_MODELS = [
-    "qwen2.5-coder:3b",
-    "qwen3:1.7b", 
-    "qwen2.5-coder:7b",
-    "granite-embedding:278m",
-    "nomic-embed-text:latest",
-    "qwen2.5-coder:1.5b",
-    "granite-embedding:latest",
-    "fluffy/l3-8b-stheno-v3.2:latest",
-    "deepscaler:latest",
-    "qwen2.5-coder:0.5b"
+    "qwen3.5:0.8b",
+    "llama3.2:latest", 
+    "qwen3.5:9b", 
+    
 ]
 
 # ============================================================
