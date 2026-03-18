@@ -1,0 +1,21 @@
+FROM python:3.12-slim-bookworm
+
+WORKDIR /app
+
+# Install system dependencies (libsndfile1 is required by soundfile python module)
+RUN apt-get update && apt-get install -y libsndfile1 && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install python dependencies natively
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY . .
+
+# Expose Gradio port
+EXPOSE 7860
+
+# Run the Gradio application
+CMD ["python", "qwen_tts_studio.py"]
